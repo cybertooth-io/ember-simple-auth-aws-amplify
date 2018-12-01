@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import AdaptersTokenHeadersMixin from 'ember-aws-amplify-auth/mixins/adapters/token-headers';
+import AdaptersTokenHeadersMixin from 'ember-simple-auth-aws-amplify/mixins/adapters/token-headers';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | adapters/token-headers', function () {

@@ -1,5 +1,5 @@
 {
-  "name": "ember-aws-amplify-auth",
+  "name": "ember-simple-auth-aws-amplify",
   "version": "0.0.1-alpha.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [

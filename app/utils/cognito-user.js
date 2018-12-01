@@ -1,1 +1,1 @@
-export { default } from 'ember-aws-amplify-auth/utils/cognito-user';
+export { default } from 'ember-simple-auth-aws-amplify/utils/cognito-user';

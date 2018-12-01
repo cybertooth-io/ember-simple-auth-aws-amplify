@@ -1,4 +1,4 @@
-ember-aws-amplify-auth
+ember-simple-auth-aws-amplify
 ==============================================================================
 
 [Short description of the addon.]
@@ -7,7 +7,7 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install ember-aws-amplify-auth
+ember install ember-simple-auth-aws-amplify
 ```
 
 
@@ -23,7 +23,7 @@ Contributing
 ### Installation
 
 * `git clone <repository-url>`
-* `cd ember-aws-amplify-auth`
+* `cd ember-simple-auth-aws-amplify`
 * `npm install`
 
 ### Linting

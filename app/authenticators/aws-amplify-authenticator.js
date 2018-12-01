@@ -1,1 +1,1 @@
-export { default } from 'ember-aws-amplify-auth/authenticators/aws-amplify-authenticator';
+export { default } from 'ember-simple-auth-aws-amplify/authenticators/aws-amplify-authenticator';
