@@ -49,3 +49,15 @@ License
 ------------------------------------------------------------------------------
 
 This project is licensed under the [MIT License](LICENSE.md).
+
+#### Addon Dependencies
+
+When upgrading this add-on, after successfully performing `ember init` use the following
+commands to install the following dependencies required by this add-on.
+
+```bash
+ember install ember-auto-import
+ember install ember-concurrency
+ember install ember-simple-auth
+yarn add --dev @aws-amplify/auth @aws-amplify/core
+```

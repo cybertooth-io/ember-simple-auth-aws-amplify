@@ -1,6 +1,6 @@
 {
   "name": "ember-aws-amplify-auth",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
@@ -24,9 +24,12 @@
     "ember-cli-babel": "^6.16.0"
   },
   "devDependencies": {
+    "@aws-amplify/auth": "^1.2.10",
+    "@aws-amplify/core": "^1.0.18",
     "@ember/optional-features": "^0.6.3",
     "broccoli-asset-rev": "^2.7.0",
     "ember-ajax": "^3.1.0",
+    "ember-auto-import": "^1.2.17",
     "ember-cli": "~3.4.3",
     "ember-cli-dependency-checker": "^3.0.0",
     "ember-cli-eslint": "^4.2.3",
@@ -42,6 +45,7 @@
     "ember-load-initializers": "^1.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-resolver": "^5.0.1",
+    "ember-simple-auth": "^1.7.0",
     "ember-source": "~3.4.0",
     "ember-source-channel-url": "^1.1.0",
     "ember-try": "^1.0.0",
