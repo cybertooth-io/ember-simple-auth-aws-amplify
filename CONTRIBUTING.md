@@ -59,6 +59,9 @@ $ yarn link
 $ yarn link ember-simple-auth-aws-amplify
 ```
 
+Note: I've actually had to go into my _other project_ and put this into its `package.json`:
+`"ember-simple-auth-aws-amplify": "link:../ember-simple-auth-aws-amplify",`
+
 ### Unlinking
 
 Again, use yarn.
