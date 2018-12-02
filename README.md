@@ -1,11 +1,19 @@
 ember-simple-auth-aws-amplify
 ==============================================================================
 
+Using [AWS Amplify Auth](https://aws-amplify.github.io/docs/js/authentication) & Core 
+library to authenticate with your AWS Cognito User Pool.
+
+**ALPHA ADD-ON: I have just started playing with Cognito and AWS Amplify.  I moved this code to an add-on because it
+gave me hives allowing it to reside within my Ember App.  I still need to round out the services.**
+
+**Add issues if there are features you're looking for.**
+
+[This might be a more stable add-on for your Cognito needs but instead uses `amazon-cognito-identity-js`](https://github.com/paulcwatts/ember-cognito)
+
 [![npm version](http://badge.fury.io/js/ember-simple-auth-aws-amplify.svg)](http://badge.fury.io/js/ember-simple-auth-aws-amplify) ![downloads](http://img.shields.io/npm/dy/ember-simple-auth-aws-amplify.svg) [![CircleCI](http://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify.svg?style=shield)](http://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify) [![Code Climate](http://codeclimate.com/github/cybertooth-io/ember-simple-auth-aws-amplify/badges/gpa.svg)](http://codeclimate.com/github/cybertooth-io/ember-simple-auth-aws-amplify) 
 
 ![Dependencies](http://david-dm.org/cybertooth-io/ember-simple-auth-aws-amplify.svg) [![ember-observer-badge](http://emberobserver.com/badges/ember-simple-auth-aws-amplify.svg)](http://emberobserver.com/addons/ember-simple-auth-aws-amplify) [![License](http://img.shields.io/npm/l/ember-simple-auth-aws-amplify.svg)](LICENSE.md)
-
-[Short description of the addon.]
 
 Built With
 ------------------------------------------------------------------------------
@@ -25,10 +33,57 @@ Tested Against
 [![ember-beta](https://img.shields.io/badge/ember--try-ember--beta-brightgreen.svg)](https://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify)
 [![ember-canary](https://img.shields.io/badge/ember--try-ember--canary-brightgreen.svg)](https://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify)
 
-Demo & Documentation
+Quick Start
 ------------------------------------------------------------------------------
 
-[TODO]
+1. Configure your AWS Congnito `region`, `userPoolId`, & `userPoolWebClientId` in your `config/environment.js`
+under the `APP.ember-simple-auth-aws-amplify` object path.
+```javascript
+// config/environment.js
+module.exports = function (environment) {
+  let ENV = {
+    // ...
+    APP: {
+      'ember-simple-auth-aws-amplify': {
+        awsAmplifyAuth: {
+          config: {
+            // Amazon Cognito Region
+            region: 'xx-yyyyyy-#',
+            // Amazon Cognito User Pool ID
+            userPoolId: 'xx-yyyyyy-#_zzzzzzzzz',
+            // Amazon Cognito Web Client ID (26-char alphanumeric string)
+            userPoolWebClientId: 'xxxxxxxxxxxxxxxxxxxxxxxxxx',
+          }
+        },
+        // `mixins/adapters/token-headers.js` uses this field to attach your ACCESS token to your Ember-Data requests
+        headerAuthorization: 'Authorization',
+        // `mixins/adapters/token-headers.js` uses this field to attach your ID token to your Ember-Data requests
+        headerIdentification: 'Identification',
+      }
+      // ...
+    }
+    // ...
+  };
+  // ...
+  return ENV;
+};
+```
+1. Inject the basic Ember Simple Auth service into your route or controller: `session: service()`.
+1. Then in your route or controller action that the login form submits to: 
+`this.get('session').authenticate('authenticator:aws-amplify-authenticator', username, password);`. This
+returns a promise, deal with it accordingly!
+1. After authenticating, your standard _Ember Simple Auth_ `session` will have a copy of your
+AWS `CognitoUser` instance.  In fact, I've created a little proxy object to get you at the meat and potatoes:
+```javascript
+this.get('session.data.authenticated.cognitoUser.accessToken');   // -> your signed access token
+this.get('session.data.authenticated.cognitoUser.idToken');       // -> your signed id token
+this.get('session.data.authenticated.cognitoUser.idPayload');     // -> your id token's decoded payload
+this.get('session.data.authenticated.cognitoUser._cognitoUser');  // -> reference to the instance returned by Cognito
+// check out the remaining helpers at `addons/utils/cognito-user.js`
+```
+1. For logging out, `this.get('session').invalidate();`.  This also returns a promise, again deal accordingly!
+1. I'm using the `addon/services/aws-amplify-auth-service.js` to expose AWS Amplify Auth methods (e.g. `signUp(...)`).
+Inject this as `awsAmplifyAuthService: service()` in your routes and controllers.
 
 Installation
 ------------------------------------------------------------------------------
@@ -45,11 +100,14 @@ When working through the Ember upgrade process, I recommend
 invoking the `ember install ember-simple-auth-aws-amplify` command once 
 you are done to get the latest version of the add-on.
 
+If you've already got the package installed and just want to run the
+add-on blueprint: `ember g ember-simple-auth-aws-amplify`.
+
 ### Dependencies
 
-#### `@@aws-amplify/auth`
+#### `@aws-amplify/auth`
 
-#### `@@aws-amplify/core`
+#### `@aws-amplify/core`
 
 #### `ember-auto-import`
 
@@ -60,135 +118,14 @@ you are done to get the latest version of the add-on.
 Usage
 ------------------------------------------------------------------------------
 
-[Longer description of how to use the addon in apps.]
+[I'll add some more here before official release]
 
-----
-
-Contributing
+Contributing & Yadda-Yadda-Yadda
 ------------------------------------------------------------------------------
 
-# Contributing
-
-## Setup
-
-* `git clone git@github.com:cybertooth-io/ember-simple-auth-aws-amplify.git`
-* `yarn`
-
-## Running The Dummy Application
-
-* `ember server`
-* Visit your app at http://localhost:4200.
-
-## Running Add-on Tests
-
-* `npm test` (Runs `ember try:testall` to test your add-on against multiple Ember versions)
-* `ember test`
-* `ember test --server`
-
-## Building The Add-on
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
-
-# Linking This Add-on For Local Testing
-
-## Linking
-
-Use yarn.
-
-```bash
-# from this add-on project
-$ yarn link
-# from the other project that depends on this add-on
-$ yarn link ember-simple-auth-aws-amplify
-```
-
-## Unlinking
-
-Again, use yarn.
-
-```bash
-# from the other project that linked to this add-on
-$ yarn unlink ember-simple-auth-aws-amplify
-# from this add-on project
-$ yarn unlink
-```
-
-# Deploying The Dummy Application
-
-Make sure your `~/.aws/credentials` file has a profile named _cybertooth_ 
-with a valid key and secret,
-
-```
-[cybertooth]
-aws_access_key_id = <KEY>
-aws_secret_access_key = <SECRET>
-```
-
-Deploy by invoking the following command: `ember deploy production`
-
-Confirm your changes are showing up in our S3 container: http://ember-simple-auth-aws-amplify.cybertooth.io/
-
-You may need to go into AWS CloudFront to expire the index.html file before the site 
-changes are picked up (see [issue](https://github.com/cybertoothca/ember-cli-text-support-mixins/issues/29)).
-
-# Releasing & Publishing To NPM
-
-```bash
-# `yarn publish` will prompt you for the next/new version name
-$ yarn publish
-$ git push
-$ git push --tags
-```
-
-
-
-
-
-
-
-
-
-
-### Installation
-
-* `git clone <repository-url>`
-* `cd ember-simple-auth-aws-amplify`
-* `npm install`
-
-### Linting
-
-* `npm run lint:hbs`
-* `npm run lint:js`
-* `npm run lint:js -- --fix`
-
-### Running tests
-
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `ember try:each` – Runs the test suite against multiple Ember versions
-
-### Running the dummy application
-
-* `ember serve`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
-
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+Check out [CONTRIBUTING.md](CONTRIBUTING.md).
 
 License
 ------------------------------------------------------------------------------
 
 This project is licensed under the [MIT License](LICENSE.md).
-
-#### Addon Dependencies
-
-When upgrading this add-on, after successfully performing `ember init` use the following
-commands to install the following dependencies required by this add-on.
-
-```bash
-ember install ember-auto-import
-ember install ember-concurrency
-ember install ember-simple-auth
-yarn add --dev @aws-amplify/auth @aws-amplify/core
-```

@@ -2,7 +2,7 @@ import { get } from '@ember/object';
 import { Hub } from '@aws-amplify/core';
 import Auth from '@aws-amplify/auth';
 import Service, { inject as service } from '@ember/service';
-import CognitoUser from '../utils/proxies/cognito-user';
+import CognitoUser from '../utils/cognito-user';
 
 /**
  * You can extend and override this behaviour by creating your own `aws-amplify-auth-service` in your

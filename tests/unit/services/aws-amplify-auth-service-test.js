@@ -4,9 +4,12 @@ import { setupTest } from 'ember-qunit';
 module('Unit | Service | aws-amplify-auth-service', function (hooks) {
   setupTest(hooks);
 
-  // Replace this with your real tests.
-  test('it exists', function (assert) {
-    let service = this.owner.lookup('service:aws-amplify-auth-service');
-    assert.ok(service);
+  test('when injecting with a ', function (assert) {
+    // assert.throws(...) doesn't work?
+    try {
+      this.owner.lookup('service:aws-amplify-auth-service');
+    } catch (e) {
+      assert.equal(e.toString(), 'Error: Invalid UserPoolId format.');
+    }
   });
 });
