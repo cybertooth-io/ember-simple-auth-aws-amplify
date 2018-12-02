@@ -68,7 +68,7 @@ module.exports = function (environment) {
   return ENV;
 };
 ```
-1. Inject the basic Ember Simple Auth service into your route or controller: `session: service()`.
+2. Inject the basic Ember Simple Auth service into your route or controller: `session: service()`.
 1. Then in your route or controller action that the login form submits to: 
 `this.get('session').authenticate('authenticator:aws-amplify-authenticator', username, password);`. This
 returns a promise, deal with it accordingly!
@@ -81,7 +81,7 @@ this.get('session.data.authenticated.cognitoUser.idPayload');     // -> your id 
 this.get('session.data.authenticated.cognitoUser._cognitoUser');  // -> reference to the instance returned by Cognito
 // check out the remaining helpers at `addons/utils/cognito-user.js`
 ```
-1. For logging out, `this.get('session').invalidate();`.  This also returns a promise, again deal accordingly!
+5. For logging out, `this.get('session').invalidate();`.  This also returns a promise, again deal accordingly!
 1. I'm using the `addon/services/aws-amplify-auth-service.js` to expose AWS Amplify Auth methods (e.g. `signUp(...)`).
 Inject this as `awsAmplifyAuthService: service()` in your routes and controllers.
 
