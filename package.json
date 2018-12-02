@@ -1,13 +1,35 @@
 {
   "name": "ember-simple-auth-aws-amplify",
   "version": "0.0.1-alpha.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Ember Simple Auth implementation using AWS Amplify.",
   "keywords": [
+    "ember-simple-auth",
+    "aws-amplify",
+    "@aws-amplify/auth",
+    "@aws-amplify/core",
+    "AWS Cognito",
+    "Cognito User Pool",
+    "OAUTH2",
+    "Implicit Flow",
     "ember-addon"
   ],
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cybertooth-io/ember-simple-auth-aws-amplify"
+  },
   "license": "MIT",
-  "author": "",
+  "author": {
+    "name": "cybertooth.io",
+    "email": "dev@cybertooth.io",
+    "url": "http://cybertooth.io"
+  },
+  "contributors": [
+    {
+      "name": "Dan Nelson",
+      "email": "dan@cybertooth.io",
+      "url": "https://nadnoslen.github.io/"
+    }
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"
