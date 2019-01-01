@@ -12,7 +12,8 @@ export default Base.extend({
    * @return {Promise< | any> | *}
    */
   authenticate(username, password) {
-    return this.get('awsAmplifyAuthService').signIn(username, password, this.get('refreshAccessTokenTask'));
+    return this.get('awsAmplifyAuthService')
+      .signIn(username, password, this.get('refreshAccessTokenTask'));
   },
 
   /**
@@ -26,7 +27,8 @@ export default Base.extend({
    * @return {Promise<any> | *}
    */
   invalidate(/*data*/) {
-    return this.get('awsAmplifyAuthService').signOut(this.get('refreshAccessTokenTask'));
+    return this.get('awsAmplifyAuthService')
+      .signOut(this.get('refreshAccessTokenTask'));
   },
 
   /**
@@ -49,6 +51,7 @@ export default Base.extend({
    * @return {Promise< | any> | *}
    */
   restore(/*data*/) {
-    return this.get('awsAmplifyAuthService').currentAuthenticatedUser(this.get('refreshAccessTokenTask'));
+    return this.get('awsAmplifyAuthService')
+      .currentAuthenticatedUser(this.get('refreshAccessTokenTask'));
   },
 });

@@ -1,4 +1,4 @@
-import { readOnly } from '@ember/object/computed';
+import { alias, equal, or, readOnly } from '@ember/object/computed';
 import EmberObject, { computed } from '@ember/object';
 
 export default EmberObject.extend({
@@ -7,11 +7,19 @@ export default EmberObject.extend({
 
   accessToken: readOnly('_cognitoUser.signInUserSession.accessToken.jwtToken'),
 
+  attributes: alias('_cognitoUser.attributes'),
+
   authenticatedAt: computed('authTime', function () {
     return new Date(parseInt(this.get('authTime')) * 1000);
   }),
 
   authTime: readOnly('accessPayload.auth_time'),
+
+  cognitoGroups: readOnly('idPayload.cognito:groups'),
+
+  cognitoUsername: readOnly('idPayload.cognito:username'),
+
+  'emailVerified?': readOnly('attributes.email_verified'),
 
   exp: readOnly('accessPayload.exp'),
 
@@ -25,10 +33,6 @@ export default EmberObject.extend({
 
   idToken: readOnly('_cognitoUser.signInUserSession.idToken.jwtToken'),
 
-  init(cognitoUser) {
-    this.set('_cognitoUser', cognitoUser);
-  },
-
   issuedAt: computed('iat', function () {
     return new Date(parseInt(this.get('iat')) * 1000);
   }),
@@ -38,9 +42,10 @@ export default EmberObject.extend({
    */
   jti: readOnly('accessPayload.jti'),
 
-  /**
-   * Cannot use the field 'attributes' because of EmberObject name conflict.
-   */
-  subjectAttributes: readOnly('_cognitoUser.attributes')
+  'mfaEnabled?': or('mfaSMS?', 'mfaTOTP?'),
+
+  'mfaSMS?': equal('_cognitoUser.preferredMFA', 'SMS'),
+
+  'mfaTOTP?': equal('_cognitoUser.preferredMFA', 'TOTP')
 });
 

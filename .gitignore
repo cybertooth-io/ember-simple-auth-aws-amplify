@@ -25,3 +25,4 @@
 # toss package-lock.json
 /package-lock.json
 
+/.gtm/
