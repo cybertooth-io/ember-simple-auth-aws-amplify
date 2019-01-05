@@ -4,6 +4,12 @@ import { task, timeout } from 'ember-concurrency';
 import { getOwner } from '@ember/application';
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
+/**
+ * An implementation of `ember-simple-auth` Authenticator.
+ *
+ * Guess what?  You won't ever invoke the `authenticate()` function.  You'll instead use
+ * the `session`'s `signIn(...)` and `confirmSignIn(...)` functions.
+ */
 export default BaseAuthenticator.extend({
 
   /**
