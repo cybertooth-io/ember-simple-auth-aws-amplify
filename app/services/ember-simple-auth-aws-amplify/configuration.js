@@ -37,5 +37,10 @@ export default Service.extend({
       'headerIdentification',
       getWithDefault(config, 'APP.ember-simple-auth-aws-amplify.headerIdentification', 'Identification')
     );
+
+    this.set(
+      'totpIssuerName',
+      getWithDefault(config, 'APP.ember-simple-auth-aws-amplify.totpIssuerName', 'Ember-Simple-Auth-Issuer-Example')
+    );
   }
 });

@@ -4,16 +4,37 @@ ember-simple-auth-aws-amplify
 Using [AWS Amplify Auth](https://aws-amplify.github.io/docs/js/authentication) & Core 
 library to authenticate with your AWS Cognito User Pool.
 
-**ALPHA ADD-ON: I have just started playing with Cognito and AWS Amplify.  I moved this code to an add-on because it
-gave me hives allowing it to reside within my Ember App.  I still need to round out the services.**
+**ALPHA ADD-ON: I have just started playing with Cognito and AWS Amplify.**
+
+Features
+------------------------------------------------------------------------------
+
+1. Attempt to adhere to the Ember Simple Auth principles while exposing a subset 
+of [AWS Amplify's `Auth`](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html)'s features 
+through the `session` service.
+1. Support sign in/out
+1. Append access & identity JWT to Ember Data adapter
+1. Expose `CognitoUser`'s `attributes`, `idToken Payload`, & `accessToken Payload` 
+in the `session.data.authenticated` property storage 
+1. Support automatic refreshing of access token
+1. Support Multi-Factor Authentication
+1. Support user sign up via email address identifier
+1. Support user password change, password reset, and profile attribute updates
+1. **WORK IN PROGRESS** - Support Federated Identities
+1. **WORK IN PROGRESS** - Tests (SFA tested so far)
 
 **Add issues if there are features you're looking for.**
-
-[This might be a more stable add-on for your Cognito needs but instead uses `amazon-cognito-identity-js`](https://github.com/paulcwatts/ember-cognito)
 
 [![npm version](http://badge.fury.io/js/ember-simple-auth-aws-amplify.svg)](http://badge.fury.io/js/ember-simple-auth-aws-amplify) ![downloads](http://img.shields.io/npm/dy/ember-simple-auth-aws-amplify.svg) [![CircleCI](http://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify.svg?style=shield)](http://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify) [![Code Climate](http://codeclimate.com/github/cybertooth-io/ember-simple-auth-aws-amplify/badges/gpa.svg)](http://codeclimate.com/github/cybertooth-io/ember-simple-auth-aws-amplify) 
 
 ![Dependencies](http://david-dm.org/cybertooth-io/ember-simple-auth-aws-amplify.svg) [![ember-observer-badge](http://emberobserver.com/badges/ember-simple-auth-aws-amplify.svg)](http://emberobserver.com/addons/ember-simple-auth-aws-amplify) [![License](http://img.shields.io/npm/l/ember-simple-auth-aws-amplify.svg)](LICENSE.md)
+
+Motivation
+------------------------------------------------------------------------------
+
+1. Hide details of the AWS Amplify `Auth` & `CognitoUser`
+1. Fold into familiar `ember-simple-auth` ecosystem
+1. Automatically refresh access tokens on a schedule using `ember-concurrency`
 
 Built With
 ------------------------------------------------------------------------------
@@ -33,57 +54,6 @@ Tested Against
 [![ember-beta](https://img.shields.io/badge/ember--try-ember--beta-brightgreen.svg)](https://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify)
 [![ember-canary](https://img.shields.io/badge/ember--try-ember--canary-brightgreen.svg)](https://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify)
 
-Quick Start
-------------------------------------------------------------------------------
-
-1. Configure your AWS Congnito `region`, `userPoolId`, & `userPoolWebClientId` in your `config/environment.js`
-under the `APP.ember-simple-auth-aws-amplify` object path.
-```javascript
-// config/environment.js
-module.exports = function (environment) {
-  let ENV = {
-    // ...
-    APP: {
-      'ember-simple-auth-aws-amplify': {
-        awsAmplifyAuth: {
-          config: {
-            // Amazon Cognito Region
-            region: 'xx-yyyyyy-#',
-            // Amazon Cognito User Pool ID
-            userPoolId: 'xx-yyyyyy-#_zzzzzzzzz',
-            // Amazon Cognito Web Client ID (26-char alphanumeric string)
-            userPoolWebClientId: 'xxxxxxxxxxxxxxxxxxxxxxxxxx',
-          }
-        },
-        // `mixins/adapters/token-headers.js` uses this field to attach your ACCESS token to your Ember-Data requests
-        headerAuthorization: 'Authorization',
-        // `mixins/adapters/token-headers.js` uses this field to attach your ID token to your Ember-Data requests
-        headerIdentification: 'Identification',
-      }
-      // ...
-    }
-    // ...
-  };
-  // ...
-  return ENV;
-};
-```
-2. Inject the basic Ember Simple Auth service into your route or controller: `session: service()`.
-1. Then in your route or controller action that the login form submits to: 
-`this.get('session').authenticate('authenticator:aws-amplify-authenticator', username, password);`. This
-returns a promise, deal with it accordingly!
-1. After authenticating, your standard _Ember Simple Auth_ `session` will have a copy of your
-AWS `CognitoUser` instance.  In fact, I've created a little proxy object to get you at the meat and potatoes:
-```javascript
-this.get('session.data.authenticated.cognitoUser.accessToken');   // -> your signed access token
-this.get('session.data.authenticated.cognitoUser.idToken');       // -> your signed id token
-this.get('session.data.authenticated.cognitoUser.idPayload');     // -> your id token's decoded payload
-this.get('session.data.authenticated.cognitoUser._cognitoUser');  // -> reference to the instance returned by Cognito
-// check out the remaining helpers at `addons/utils/cognito-user.js`
-```
-5. For logging out, `this.get('session').invalidate();`.  This also returns a promise, again deal accordingly!
-1. I'm using the `addon/services/aws-amplify-auth-service.js` to expose AWS Amplify Auth methods (e.g. `signUp(...)`).
-Inject this as `awsAmplifyAuthService: service()` in your routes and controllers.
 
 Installation
 ------------------------------------------------------------------------------
@@ -105,15 +75,89 @@ add-on blueprint: `ember g ember-simple-auth-aws-amplify`.
 
 ### Dependencies
 
-#### `@aws-amplify/auth`
+* `@aws-amplify/auth` - Authentication library from AWS Amplify; interacts with AWS Cognito User Pool 
+* `@aws-amplify/core` - Introduced to take advantage of AWS Amplify's event Hub
+* `ember-auto-import` - Pleasantly import `auth` and `core`
+* `ember-concurrency` - Timed task for refreshing token
+* `ember-simple-auth` - The EmberJs foundation auth add-on 
 
-#### `@aws-amplify/core`
+Quick Start
+------------------------------------------------------------------------------
 
-#### `ember-auto-import`
+### EmberJs Configuration
 
-#### `ember-concurrency`
+Configure your AWS Congnito `region`, `userPoolId`, & `userPoolWebClientId` in your `config/environment.js`
+under the `APP.ember-simple-auth-aws-amplify` object path.
 
-#### `ember-simple-auth`
+```javascript
+// config/environment.js
+module.exports = function (environment) {
+  let ENV = {
+    // ...
+    APP: {
+      'ember-simple-auth-aws-amplify': {
+        awsAmplifyAuth: {
+          // @see https://aws-amplify.github.io/docs/js/authentication#manual-setup
+          config: {
+            // Amazon Cognito Region
+            region: 'xx-yyyyyy-#',
+            // Amazon Cognito User Pool ID
+            userPoolId: 'xx-yyyyyy-#_zzzzzzzzz',
+            // Amazon Cognito Web Client ID (26-char alphanumeric string)
+            userPoolWebClientId: 'xxxxxxxxxxxxxxxxxxxxxxxxxx',
+          }
+        },
+        // `mixins/adapters/token-headers.js` uses this field to attach your ACCESS token to your Ember-Data requests
+        headerAuthorization: 'Authorization',
+        // `mixins/adapters/token-headers.js` uses this field to attach your ID token to your Ember-Data requests
+        headerIdentification: 'Identification',
+        // `utils/mfa-activation-state.js` takes this in it's constructor and uses it when naming your app 
+        // inside the MFA Authenticator App
+        totpIssuerName: 'Ember-Simple-Auth-Issuer-Example'
+      }
+      // ...
+    }
+    // ...
+  };
+  // ...
+  return ENV;
+};
+```
+
+### AWS Cognito Configuration
+
+#### Pool Attributes
+
+![][img-pool-attibutes]
+
+#### Pool Policies
+
+![][img-pool-policies]
+
+#### Pool MFA And Verifications
+
+![][img-pool-mfa]
+
+#### Pool Devices
+
+![][img-pool-devices]
+
+#### Pool App Clients
+
+![][img-pool-clients]
+
+#### Client Settings
+
+![][img-app-settings]
+
+Examples & Workflow
+------------------------------------------------------------------------------
+
+### Sign Up
+
+### Sign In
+
+### Sign Out
 
 Usage
 ------------------------------------------------------------------------------
@@ -129,3 +173,10 @@ License
 ------------------------------------------------------------------------------
 
 This project is licensed under the [MIT License](LICENSE.md).
+
+[img-app-settings]: ./user-pool-app-settings.jpg
+[img-pool-attributes]: ./user-pool-general-attributes.jpg
+[img-pool-clients]: ./user-pool-general-clients.jpg
+[img-pool-devices]: ./user-pool-general-devices.jpg
+[img-pool-mfa]: ./user-pool-general-mfa.jpg
+[img-pool-policies]: ./user-pool-general-policies.jpg

@@ -1,6 +1,6 @@
 {
   "name": "ember-simple-auth-aws-amplify",
-  "version": "0.0.1-alpha.0",
+  "version": "0.1.0-alpha.0",
   "description": "Ember Simple Auth implementation using AWS Amplify.",
   "keywords": [
     "ember-simple-auth",
@@ -43,8 +43,8 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "@aws-amplify/auth": "^1.2.10",
-    "@aws-amplify/core": "^1.0.18",
+    "@aws-amplify/auth": "^1.2.14",
+    "@aws-amplify/core": "^1.0.21",
     "ember-auto-import": "^1.2.17",
     "ember-cli-babel": "^6.16.0"
   },
@@ -68,7 +68,7 @@
     "ember-load-initializers": "^1.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-resolver": "^5.0.1",
-    "ember-simple-auth": "^1.7.0",
+    "ember-simple-auth": "^1.8.0",
     "ember-source": "~3.4.0",
     "ember-source-channel-url": "^1.1.0",
     "ember-try": "^1.0.0",

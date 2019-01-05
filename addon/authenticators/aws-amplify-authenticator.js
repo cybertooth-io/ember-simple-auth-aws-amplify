@@ -1,57 +1,77 @@
 import { inject as service } from '@ember/service';
-import Base from 'ember-simple-auth/authenticators/base';
+import { merge } from '@ember/polyfills';
 import { task, timeout } from 'ember-concurrency';
 import { getOwner } from '@ember/application';
+import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
-export default Base.extend({
+export default BaseAuthenticator.extend({
 
-  /**
-   * Expects the username and password in order to authenticate.
-   * @param username
-   * @param password
-   * @return {Promise< | any> | *}
-   */
-  authenticate(username, password) {
-    return this.get('awsAmplifyAuthService')
-      .signIn(username, password, this.get('refreshAccessTokenTask'));
+  authenticate() {
+    return this._refreshUser();
   },
 
-  /**
-   * This service simply wraps AWS Amplify's `Auth` class instance.  If you need access to `Auth` override the
-   * `aws-amplify-auth-service` service.
-   */
-  awsAmplifyAuthService: service(),
+  awsAmplify: service('aws-amplify.auth'),
 
   /**
    * Takes no arguments.
    * @return {Promise<any> | *}
    */
   invalidate(/*data*/) {
-    return this.get('awsAmplifyAuthService')
-      .signOut(this.get('refreshAccessTokenTask'));
+    return this.get('awsAmplify.auth')
+      .signOut()
+      .then(() => {
+        this.get('_refreshAccessTokenTask').cancelAll();
+      });
   },
-
-  /**
-   * This is an ember-concurrency task that waits until access token expiry and then fires
-   * a restore on the session (just like in `ember-simple-auth/addon/initializers/setup-session-restoration.js`).
-   *
-   */
-  refreshAccessTokenTask: task(function* (exp) {
-    const wait = exp * 1000 - Date.now();
-    console.warn('Scheduled token refresh will occur at ', new Date(exp * 1000));
-
-    yield timeout(wait);
-
-    console.warn('Commencing refresh of the access token.');
-    return getOwner(this).lookup('session:main').restore();
-  }),
 
   /**
    * Takes no arguments.
    * @return {Promise< | any> | *}
    */
   restore(/*data*/) {
-    return this.get('awsAmplifyAuthService')
-      .currentAuthenticatedUser(this.get('refreshAccessTokenTask'));
+    return this._refreshUser();
   },
+
+  /* Private
+   * ---------------------------------------------------------------------------------------------------------------- */
+
+  /**
+   * This is an ember-concurrency task that waits until access token expiry and then fires
+   * a restore on the session (just like in `ember-simple-auth/addon/initializers/setup-session-restoration.js`).
+   */
+  _refreshAccessTokenTask: task(function* (exp) {
+    const wait = exp * 1000 - Date.now();
+    console.warn('Scheduled token refresh will occur at ', new Date(exp * 1000));
+
+    yield timeout(wait);
+
+    console.warn('Commencing refresh of the access token at ', new Date());
+    return getOwner(this).lookup('session:main').restore();
+  }),
+
+  /**
+   * Grab the current authenticated user from AWS Cognito authentication server directly; do not use cache.
+   * Merge the attributes, idPayload, accessPayload, and preferredMFA into a hash that is returned from the success
+   * side of the returned promise.
+   *
+   * Setup a ember-concurrency timed task that will refresh the current user from AWS Cognito automatically in
+   * the background.
+   *
+   * @return {PromiseLike<T | never> | Promise<T | never>}
+   * @private
+   */
+  _refreshUser() {
+    return this.get('awsAmplify.auth')
+      .currentAuthenticatedUser({ bypassCache: true })
+      .then(cognitoUser => {
+        this.get('_refreshAccessTokenTask').cancelAll();
+        this.get('_refreshAccessTokenTask').perform(cognitoUser.signInUserSession.accessToken.payload.exp);
+        const data = merge({ accessPayload: cognitoUser.signInUserSession.accessToken.payload }, { accessToken: cognitoUser.signInUserSession.accessToken.jwtToken });
+        merge(data, { attributes: cognitoUser.attributes });
+        merge(data, { idPayload: cognitoUser.signInUserSession.idToken.payload });
+        merge(data, { idToken: cognitoUser.signInUserSession.idToken.jwtToken });
+        merge(data, { preferredMFA: cognitoUser.preferredMFA });
+        return data;
+      });
+  }
 });
