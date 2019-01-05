@@ -1,0 +1,11 @@
+[ver:1,total:2340]
+addon/authenticators/aws-amplify-authenticator.js:570,1546660800:30,1546664400:540,m
+addon/mixins/session/functions.js:350,1546664400:350,m
+addon/utils/mfa-activation-state.js:320,1546664400:320,m
+addon/mixins/session/attributes.js:270,1546664400:270,m
+addon/mixins/aws-amplify/hub.js:220,1546664400:220,m
+addon/utils/authentication-state.js:210,1546664400:210,m
+.gtm/terminal.app:150,1546660800:150,r
+addon/services/aws-amplify/auth.js:130,1546664400:130,m
+addon/services/session.js:100,1546664400:100,r
+node_modules/ember-simple-auth/addon/initializers/setup-session-restoration.js:20,1546664400:20,r
