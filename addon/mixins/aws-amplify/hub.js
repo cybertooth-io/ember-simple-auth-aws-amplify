@@ -2,8 +2,10 @@ import Mixin from '@ember/object/mixin';
 
 /**
  * Support for AWS Amplify's event Hub during authentication.
+ *
  * @see https://aws-amplify.github.io/docs/js/authentication#subscribing-events
  * @see https://aws-amplify.github.io/docs/js/hub#listening-authentication-events
+ * @see https://aws-amplify.github.io/amplify-js/api/classes/hubclass.html
  */
 export default Mixin.create({
   /**

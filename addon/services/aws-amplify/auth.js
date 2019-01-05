@@ -5,12 +5,17 @@ import AwsAmplifyHub from '../../mixins/aws-amplify/hub';
 
 /**
  * An Ember Service that wraps the AWS Amplify `Auth` instance and makes it available via the `auth` attribute.
+ *
+ * @see https://aws-amplify.github.io/amplify-js/api/classes/authclass.html
+ * @see https://aws-amplify.github.io/docs/js/authentication#manual-setup
  */
 export default Service.extend(AwsAmplifyHub, {
 
   /**
    * A service that reads the Ember `config/environment.js` configuration for the `ember-simple-auth-aws-amplify`
    * add-on.
+   *
+   * @see https://aws-amplify.github.io/docs/js/authentication#manual-setup
    */
   configuration: service('ember-simple-auth-aws-amplify.configuration'),
 

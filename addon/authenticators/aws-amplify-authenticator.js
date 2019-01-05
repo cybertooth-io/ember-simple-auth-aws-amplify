@@ -105,6 +105,15 @@ export default BaseAuthenticator.extend({
    * Setup a ember-concurrency timed task that will refresh the current user from AWS Cognito automatically in
    * the background.
    *
+   * Here's a mapping of `CognitoUser` properties to Ember-Simple-Auth `session.data.authenticated` properties:
+   *
+   * `cognitoUser.signInUserSession.accessToken.payload` -> `session.data.authenticated.accessPayload`
+   * `cognitoUser.signInUserSession.accessToken.jwtToken` -> `session.data.authenticated.accessToken`
+   * `cognitoUser.attributes` -> `session.data.authenticated.attributes`
+   * `cognitoUser.signInUserSession.idToken.payload` -> `session.data.authenticated.idPayload`
+   * `cognitoUser.signInUserSession.idToken.jwtToken` -> `session.data.authenticated.idToken`
+   * `cognitoUser.preferredMFA` -> `session.data.authenticated.preferredMFA`
+   *
    * @return {Promise<any>} the processed `CognitoUser` information turned into a hash that will be written
    * to the `session.data.authenticated` property storage.
    * @private

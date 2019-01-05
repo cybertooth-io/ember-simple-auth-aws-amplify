@@ -4,6 +4,10 @@ import Mixin from '@ember/object/mixin';
 import AuthenticationState from '../../utils/authentication-state';
 import MfaActivationState from '../../utils/mfa-activation-state';
 
+/**
+ * This mixin acts as a wrapper for many of the AWS Amplify `Auth`'s functions.
+ * @see https://aws-amplify.github.io/amplify-js/api/classes/authclass.html
+ */
 export default Mixin.create({
   /**
    * A singleton service that provides universal access to AWS Amplify's `Auth` instance.
@@ -41,6 +45,7 @@ export default Mixin.create({
     return this.get('awsAmplify.auth')
       .confirmSignIn(authenticationState.get('cognitoUser'), mfaCode, authenticationState.get('mfaChallengeName'))
       .then(() => {
+        authenticationState.destroy();
         this.authenticate('authenticator:aws-amplify-authenticator');
       })
       .catch(response => this._throwErrorResponse(response));
@@ -96,7 +101,7 @@ export default Mixin.create({
       .currentAuthenticatedUser({ bypassCache: false })
       .then(cognitoUser => {
         mfaActivationState = MfaActivationState.create({
-          cognitoUser: cognitoUser,
+          _cognitoUser: cognitoUser,
           issuer: this.get('configuration.totpIssuerName')
         });
         return this.get('awsAmplify.auth').setupTOTP(cognitoUser)
@@ -111,14 +116,16 @@ export default Mixin.create({
   /**
    * @param username
    * @param password
-   * @return {Promise< | AuthenticationState | never>}
+   * @return {Promise<AuthenticationState>}
    * @see https://aws-amplify.github.io/amplify-js/api/classes/authclass.html#signin
    */
   signIn(username, password) {
     return this.get('awsAmplify.auth')
       .signIn(username, password)
       .then(cognitoUser => {
-        const authenticationState = AuthenticationState.create({ cognitoUser: cognitoUser });
+        const authenticationState = AuthenticationState.create({
+          _cognitoUser: cognitoUser
+        });
         if (authenticationState.get('singleStepAuthentication?')) {
           this.authenticate('authenticator:aws-amplify-authenticator');
         }

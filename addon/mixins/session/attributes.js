@@ -2,6 +2,14 @@ import { equal, not, readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import Mixin from '@ember/object/mixin';
 
+/**
+ * This mixin provides some tangible helpers that can tranform information from your
+ * `session.data.authenticated`.  For example, the token `exp` integer is turned
+ * into its `Date` equivalent through the `expiresAt` computed.
+ *
+ * Access these by injecting your session into your controller, route, or template and invoking
+ * the getter that you want; for example: `this.get('session.expiresAt')`.
+ */
 export default Mixin.create({
   authenticatedAt: computed('data.authenticated.accessPayload.auth_time', function () {
     return new Date(parseInt(this.get('data.authenticated.accessPayload.auth_time')) * 1000);
