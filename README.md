@@ -128,7 +128,7 @@ module.exports = function (environment) {
 
 #### Pool Attributes
 
-![][img-pool-attibutes]
+![][img-pool-attributes]
 
 #### Pool Policies
 
