@@ -1,0 +1,7 @@
+[ver:1,total:780]
+.gtm/terminal.app:630,1546664400:390,1546668000:240,r
+package.json:60,1546664400:60,m
+addon/utils/mfa-activation-state.js:30,1546664400:30,r
+README.md:20,1546664400:20,r
+addon/mixins/aws-amplify/hub.js:20,1546664400:20,r
+addon/mixins/session/functions.js:20,1546664400:20,r
