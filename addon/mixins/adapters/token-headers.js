@@ -5,8 +5,8 @@ import Mixin from '@ember/object/mixin';
 export default Mixin.create(DataAdapterMixin, {
   authorize(xhr) {
     if (this.get('session.isAuthenticated')) {
-      const accessToken = this.get('session.data.authenticated.cognitoUser.accessToken');
-      const idToken = this.get('session.data.authenticated.cognitoUser.idToken');
+      const accessToken = this.get('session.data.authenticated.accessToken');
+      const idToken = this.get('session.data.authenticated.idToken');
 
       xhr.setRequestHeader(this.get('configuration.headerAuthorization'), `Bearer ${accessToken}`);
       xhr.setRequestHeader(this.get('configuration.headerIdentification'), idToken);
