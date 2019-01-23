@@ -43,7 +43,7 @@ export default Mixin.create({
    */
   confirmSignIn(authenticationState, mfaCode) {
     return this.get('awsAmplify.auth')
-      .confirmSignIn(authenticationState.get('cognitoUser'), mfaCode, authenticationState.get('mfaChallengeName'))
+      .confirmSignIn(authenticationState.get('_cognitoUser'), mfaCode, authenticationState.get('mfaChallengeName'))
       .then(() => {
         authenticationState.destroy();
         this.authenticate('authenticator:aws-amplify-authenticator');
