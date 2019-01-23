@@ -163,7 +163,7 @@ export default Mixin.create({
 
   verifyTotpPasscode(mfaActivationState) {
     return this.get('awsAmplify.auth')
-      .verifyTotpToken(mfaActivationState.get('cognitoUser'), mfaActivationState.get('passcodeOne'))
+      .verifyTotpToken(mfaActivationState.get('_cognitoUser'), mfaActivationState.get('passcodeOne'))
       .then(() => {
         mfaActivationState.set('passcodeOneVerified?', true);
       })
@@ -172,11 +172,11 @@ export default Mixin.create({
 
   finalizeTotp(mfaActivationState) {
     return this.get('awsAmplify.auth')
-      .verifyTotpToken(mfaActivationState.get('cognitoUser'), mfaActivationState.get('passcodeTwo'))
+      .verifyTotpToken(mfaActivationState.get('_cognitoUser'), mfaActivationState.get('passcodeTwo'))
       .then(() => {
         mfaActivationState.set('passcodeTwoVerified?', true);
         return this.get('awsAmplify.auth')
-          .setPreferredMFA(mfaActivationState.get('cognitoUser'), 'TOTP');
+          .setPreferredMFA(mfaActivationState.get('_cognitoUser'), 'TOTP');
       })
       .then(() => {
         mfaActivationState.destroy();
