@@ -26,9 +26,9 @@ module('Unit | Mixin | session/attributes', function (hooks) {
       picture: 'PICTURE',
       preferred_username: 'PREFERRED USERNAME',
       profile: 'PROFILE',
-      timezone: 'TIMEZONE',
       updated_at: `${new Date(2001, 8, 11, 8, 0, 0).getTime() / 1000}`,
-      website: 'WEBSITE'
+      website: 'WEBSITE',
+      zoneinfo: 'TIMEZONE'
     };
   });
 
@@ -232,7 +232,7 @@ module('Unit | Mixin | session/attributes', function (hooks) {
       }
     });
 
-    assert.equal(subject.get('timezone'), SESSION_ATTRIBUTES.timezone);
+    assert.equal(subject.get('timezone'), SESSION_ATTRIBUTES.zoneinfo);
   });
 
   test('when updatedAt', function (assert) {
@@ -257,5 +257,17 @@ module('Unit | Mixin | session/attributes', function (hooks) {
     });
 
     assert.equal(subject.get('website'), SESSION_ATTRIBUTES.website);
+  });
+
+  test('when zoneInfo', function (assert) {
+    let subject = SESSION_OBJECT.create({
+      data: {
+        authenticated: {
+          attributes: SESSION_ATTRIBUTES
+        }
+      }
+    });
+
+    assert.equal(subject.get('zoneInfo'), SESSION_ATTRIBUTES.zoneinfo);
   });
 });

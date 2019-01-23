@@ -118,7 +118,7 @@ export default Mixin.create({
    */
   profile: readOnly('data.authenticated.attributes.profile'),
 
-  timezone: readOnly('data.authenticated.attributes.timezone'),
+  timezone: readOnly('zoneInfo'),
 
   /**
    * Time the End-User's information was last updated. Its value is a JSON number representing the
@@ -139,15 +139,17 @@ export default Mixin.create({
       birthdate: getWithDefault(this, 'data.authenticated.attributes.birthdate', ''),
       email: this.get('email'),
       family_name: this.get('familyName'),
+      gender: getWithDefault(this, 'gender', ''),
       given_name: this.get('givenName'),
-      // locale: getWithDefault(this, 'locale', ''),
+      locale: getWithDefault(this, 'locale', ''),
       middle_name: getWithDefault(this, 'middleName', ''),
+      name: this.get('fullName'),
       nickname: getWithDefault(this, 'nickname', ''),
       phone_number: getWithDefault(this, 'phoneNumber', ''),
       picture: getWithDefault(this, 'picture', ''),
       profile: getWithDefault(this, 'profile', ''),
-      // timezone: getWithDefault(this, 'timezone', ''),
-      website: getWithDefault(this, 'website', '')
+      website: getWithDefault(this, 'website', ''),
+      zoneinfo: getWithDefault(this, 'zoneinfo', '')
     }
   }),
 
