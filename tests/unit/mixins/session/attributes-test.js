@@ -1,29 +1,36 @@
 import EmberObject from '@ember/object';
 import SessionAttributesMixin from 'ember-simple-auth-aws-amplify/mixins/session/attributes';
 import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
-const SESSION_ATTRIBUTES = {
-  address: 'ADDRESS',
-  birthdate: `${new Date(2001, 8, 11).getTime() / 1000}`,
-  email: 'EMAIL',
-  family_name: 'FAMILY NAME',
-  gender: 'GENDER',
-  given_name: 'GIVEN NAME',
-  locale: 'LOCALE',
-  middle_name: 'MIDDLE NAME',
-  name: 'NAME',
-  nickname: 'NICKNAME',
-  phone_number: 'PHONE NUMBER',
-  picture: 'PICTURE',
-  preferred_username: 'PREFERRED USERNAME',
-  profile: 'PROFILE',
-  timezone: 'TIMEZONE',
-  updated_at: `${new Date(2001, 8, 11, 8, 0, 0).getTime() / 1000}`,
-  website: 'WEBSITE'
-};
+let SESSION_ATTRIBUTES = {};
 const SESSION_OBJECT = EmberObject.extend(SessionAttributesMixin);
 
-module('Unit | Mixin | session/attributes', function () {
+module('Unit | Mixin | session/attributes', function (hooks) {
+
+  setupTest(hooks);
+
+  hooks.beforeEach(function (/*assert*/) {
+    SESSION_ATTRIBUTES = {
+      address: 'ADDRESS',
+      birthdate: '2001-09-11',
+      email: 'EMAIL',
+      family_name: 'FAMILY NAME',
+      gender: 'GENDER',
+      given_name: 'GIVEN NAME',
+      locale: 'LOCALE',
+      middle_name: 'MIDDLE NAME',
+      name: 'FULL NAME',
+      nickname: 'NICKNAME',
+      phone_number: 'PHONE NUMBER',
+      picture: 'PICTURE',
+      preferred_username: 'PREFERRED USERNAME',
+      profile: 'PROFILE',
+      updated_at: `${new Date(2001, 8, 11, 8, 0, 0).getTime() / 1000}`,
+      website: 'WEBSITE',
+      zoneinfo: 'TIMEZONE'
+    };
+  });
 
   test('when address', function (assert) {
     let subject = SESSION_OBJECT.create({ data: { authenticated: { attributes: SESSION_ATTRIBUTES } } });
@@ -34,7 +41,21 @@ module('Unit | Mixin | session/attributes', function () {
   test('when birthDate', function (assert) {
     let subject = SESSION_OBJECT.create({ data: { authenticated: { attributes: SESSION_ATTRIBUTES } } });
 
-    assert.equal(subject.get('birthDate').toString(), new Date(SESSION_ATTRIBUTES.birthdate * 1000).toString());
+    assert.equal(subject.get('birthDate').toString(), new Date(2001, 8, 11).toString());
+  });
+
+  test('when birthDate is year of 0000', function (assert) {
+    SESSION_ATTRIBUTES.birthdate = '0000-01-01';
+    let subject = SESSION_OBJECT.create({ data: { authenticated: { attributes: SESSION_ATTRIBUTES } } });
+
+    assert.equal(subject.get('birthDate'), null);
+  });
+
+  test('when birthDate is null', function (assert) {
+    SESSION_ATTRIBUTES.birthdate = null;
+    let subject = SESSION_OBJECT.create({ data: { authenticated: { attributes: SESSION_ATTRIBUTES } } });
+
+    assert.equal(subject.get('birthDate'), null);
   });
 
   test('when email', function (assert) {
@@ -55,7 +76,8 @@ module('Unit | Mixin | session/attributes', function () {
     assert.equal(subject.get('familyName'), SESSION_ATTRIBUTES.family_name);
   });
 
-  test('when fullName', function (assert) {
+  test('when fullName is given+family because name attribute does not exist', function (assert) {
+    SESSION_ATTRIBUTES.name = null;
     let subject = SESSION_OBJECT.create({
       data: {
         authenticated: {
@@ -64,7 +86,21 @@ module('Unit | Mixin | session/attributes', function () {
       }
     });
 
+    assert.equal(subject.get('name'), null);
     assert.equal(subject.get('fullName'), `${SESSION_ATTRIBUTES.given_name} ${SESSION_ATTRIBUTES.family_name}`);
+  });
+
+  test('when fullName is name attribute', function (assert) {
+    let subject = SESSION_OBJECT.create({
+      data: {
+        authenticated: {
+          attributes: SESSION_ATTRIBUTES
+        }
+      }
+    });
+
+    assert.equal(subject.get('name'), SESSION_ATTRIBUTES.name);
+    assert.equal(subject.get('fullName'), SESSION_ATTRIBUTES.name);
   });
 
   test('when gender', function (assert) {
@@ -196,7 +232,7 @@ module('Unit | Mixin | session/attributes', function () {
       }
     });
 
-    assert.equal(subject.get('timezone'), SESSION_ATTRIBUTES.timezone);
+    assert.equal(subject.get('timezone'), SESSION_ATTRIBUTES.zoneinfo);
   });
 
   test('when updatedAt', function (assert) {
@@ -209,5 +245,29 @@ module('Unit | Mixin | session/attributes', function () {
     });
 
     assert.equal(subject.get('updatedAt').toString(), new Date(SESSION_ATTRIBUTES.updated_at * 1000).toString());
+  });
+
+  test('when website', function (assert) {
+    let subject = SESSION_OBJECT.create({
+      data: {
+        authenticated: {
+          attributes: SESSION_ATTRIBUTES
+        }
+      }
+    });
+
+    assert.equal(subject.get('website'), SESSION_ATTRIBUTES.website);
+  });
+
+  test('when zoneInfo', function (assert) {
+    let subject = SESSION_OBJECT.create({
+      data: {
+        authenticated: {
+          attributes: SESSION_ATTRIBUTES
+        }
+      }
+    });
+
+    assert.equal(subject.get('zoneInfo'), SESSION_ATTRIBUTES.zoneinfo);
   });
 });

@@ -9,7 +9,7 @@ import EmberObject, { computed } from '@ember/object';
 export default EmberObject.extend({
 
   /**
-   * Set during initialization; e.g. `MfaActivationState.create({cognitoUser: cognitoUser})`.
+   * Set during initialization; e.g. `MfaActivationState.create({_cognitoUser: cognitoUser})`.
    * @private
    */
   _cognitoUser: undefined,
