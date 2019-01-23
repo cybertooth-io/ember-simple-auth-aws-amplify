@@ -1,0 +1,5 @@
+[ver:1,total:3840]
+tests/unit/mixins/session/attributes-test.js:1950,1548226800:660,1548230400:1290,m
+addon/mixins/session/attributes.js:1470,1548226800:900,1548230400:570,m
+.gtm/terminal.app:225,1548223200:180,1548230400:45,r
+package.json:195,1548226800:180,1548230400:15,r
