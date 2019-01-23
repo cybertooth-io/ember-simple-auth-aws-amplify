@@ -58,8 +58,6 @@ Tested Against
 Installation
 ------------------------------------------------------------------------------
 
-The following command will install this add-on:
-
 ```
 ember install ember-simple-auth-aws-amplify
 ```
