@@ -11,13 +11,25 @@ import Mixin from '@ember/object/mixin';
  * the getter that you want; for example: `this.get('session.expiresAt')`.
  */
 export default Mixin.create({
+  address: readOnly('data.authenticated.attributes.address'),
+
   authenticatedAt: computed('data.authenticated.accessPayload.auth_time', function () {
     return new Date(parseInt(this.get('data.authenticated.accessPayload.auth_time')) * 1000);
+  }),
+
+  birthDate: computed('data.authenticated.attributes.birthdate', function () {
+    return new Date(parseInt(this.get('data.authenticated.attributes.birthdate')) * 1000);
   }),
 
   email: readOnly('data.authenticated.attributes.email'),
 
   familyName: readOnly('data.authenticated.attributes.family_name'),
+
+  fullName: computed('familyName', 'givenName', function () {
+    return `${this.get('givenName')} ${this.get('familyName')}`;
+  }),
+
+  gender: readOnly('data.authenticated.attributes.gender'),
 
   givenName: readOnly('data.authenticated.attributes.given_name'),
 
@@ -35,9 +47,31 @@ export default Mixin.create({
 
   issuer: readOnly('data.authenticated.accessPayload.iss'),
 
+  locale: readOnly('data.authenticated.attributes.locale'),
+
   'mfaDisabled?': equal('data.authenticated.preferredMFA', 'NOMFA'),
 
   'mfaEnabled?': not('mfaDisabled?'),
+
+  middleName: readOnly('data.authenticated.attributes.middle_name'),
+
+  name: readOnly('data.authenticated.attributes.name'),
+
+  nickname: readOnly('data.authenticated.attributes.nickname'),
+
+  phoneNumber: readOnly('data.authenticated.attributes.phone_number'),
+
+  picture: readOnly('data.authenticated.attributes.picture'),
+
+  preferredUsername: readOnly('data.authenticated.attributes.preferred_username'),
+
+  profile: readOnly('data.authenticated.attributes.profile'),
+
+  timezone: readOnly('data.authenticated.attributes.timezone'),
+
+  updatedAt: computed('data.authenticated.attributes.updated_at', function () {
+    return new Date(parseInt(this.get('data.authenticated.attributes.updated_at')) * 1000);
+  }),
 
   username: readOnly('data.authenticated.accessPayload.username')
 });

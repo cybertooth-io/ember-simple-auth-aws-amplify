@@ -67,10 +67,10 @@ Note: I've actually had to go into my _other project_ and put this into its `pac
 Again, use yarn.
 
 ```bash
-# from the other project that linked to this add-on
-$ yarn unlink ember-simple-auth-aws-amplify
 # from this add-on project
 $ yarn unlink
+# from the other project that linked to this add-on
+$ yarn unlink ember-simple-auth-aws-amplify
 ```
 
 Deploying The Dummy Application
