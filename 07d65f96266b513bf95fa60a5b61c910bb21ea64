@@ -1,0 +1,5 @@
+[ver:1,total:900]
+addon/mixins/session/attributes.js:660,1548262800:360,1548266400:300,r
+addon/mixins/session/functions.js:135,1548270000:135,m
+addon/utils/mfa-activation-state.js:90,1548270000:90,m
+tests/unit/mixins/session/attributes-test.js:15,1548270000:15,r
