@@ -149,7 +149,7 @@ export default Mixin.create({
       picture: getWithDefault(this, 'picture', ''),
       profile: getWithDefault(this, 'profile', ''),
       website: getWithDefault(this, 'website', ''),
-      zoneinfo: getWithDefault(this, 'zoneinfo', '')
+      zoneinfo: getWithDefault(this, 'zoneInfo', '')
     }
   }),
 
