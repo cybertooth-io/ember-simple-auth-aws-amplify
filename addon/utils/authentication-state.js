@@ -1,4 +1,4 @@
-import { not, notEmpty, or, readOnly } from '@ember/object/computed';
+import { equal, or, readOnly } from '@ember/object/computed';
 import EmberObject from '@ember/object';
 
 /**
@@ -7,11 +7,7 @@ import EmberObject from '@ember/object';
  */
 export default EmberObject.extend({
 
-  /**
-   * Set during initialization; e.g. `AuthenticationState.create({cognitoUser: cognitoUser})`.
-   * @private
-   */
-  _cognitoUser: undefined,
+  challengeName: readOnly('_cognitoUser.challengeName'),
 
   init(/*_cognitoUser*/) {
     this._super(...arguments);
@@ -19,11 +15,20 @@ export default EmberObject.extend({
 
   mfaChallengeDevice: readOnly('_cognitoUser.challengeParam.FRIENDLY_DEVICE_NAME'),
 
-  mfaChallengeName: readOnly('_cognitoUser.challengeName'),
+  'mfaRequired?': equal('challengeName', 'SOFTWARE_TOKEN_MFA'),
 
-  'mfaRequired?': notEmpty('_cognitoUser.challengeName'),
+  'newPasswordRequired?': equal('challengeName', 'NEW_PASSWORD_REQUIRED'),
 
-  'singleStepAuthentication?': not('twoStepAuthentication?'),
+  'singleStepAuthentication?': equal('challengeName', undefined),
 
-  'twoStepAuthentication?': or('mfaRequired?')
+  'twoStepAuthentication?': or('mfaRequired?'),
+
+  /* Private
+   ------------------------------------------------------------------------------------------------------------------ */
+
+  /**
+   * Set during initialization; e.g. `AuthenticationState.create({cognitoUser: cognitoUser})`.
+   * @private
+   */
+  _cognitoUser: undefined
 });

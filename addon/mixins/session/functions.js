@@ -30,6 +30,26 @@ export default Mixin.create({
   },
 
   /**
+   * @param authenticationState
+   * @param newPassword
+   * @return {Promise<T | never>}
+   * @see https://aws-amplify.github.io/amplify-js/api/classes/authclass.html#completenewpassword
+   */
+  completePassword(authenticationState, newPassword) {
+    return this.get('awsAmplify.auth')
+      .completeNewPassword(authenticationState.get('_cognitoUser'), newPassword)
+      .then((cognitoUser) => {
+        authenticationState.set('_cognitoUser', cognitoUser);
+        if (authenticationState.get('singleStepAuthentication?')) {
+          // authenticationState.destroy(); // don't think we can destroy this here because the caller needs it
+          this.authenticate('authenticator:aws-amplify-authenticator');
+        }
+        return authenticationState;
+      })
+      .catch(response => this._throwErrorResponse(response));
+  },
+
+  /**
    * A service that reads the Ember `config/environment.js` configuration for the `ember-simple-auth-aws-amplify`
    * add-on.
    */
@@ -43,7 +63,7 @@ export default Mixin.create({
    */
   confirmSignIn(authenticationState, mfaCode) {
     return this.get('awsAmplify.auth')
-      .confirmSignIn(authenticationState.get('_cognitoUser'), mfaCode, authenticationState.get('mfaChallengeName'))
+      .confirmSignIn(authenticationState.get('_cognitoUser'), mfaCode, authenticationState.get('challengeName'))
       .then(() => {
         authenticationState.destroy();
         this.authenticate('authenticator:aws-amplify-authenticator');
@@ -127,6 +147,7 @@ export default Mixin.create({
           _cognitoUser: cognitoUser
         });
         if (authenticationState.get('singleStepAuthentication?')) {
+          authenticationState.destroy();
           this.authenticate('authenticator:aws-amplify-authenticator');
         }
         return authenticationState;
