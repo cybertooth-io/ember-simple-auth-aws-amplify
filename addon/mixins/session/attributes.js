@@ -61,7 +61,15 @@ export default Mixin.create({
 
   givenName: readOnly('data.authenticated.attributes.given_name'),
 
-  groups: readOnly('data.authenticated.accessPayload.cognito:groups'),
+  /**
+   * Null-safe fetch of the groups assigned to the Cognito User.
+   */
+  groups: computed('data.authenticated.accessPayload.cognito:groups', function () {
+    if (isPresent(this.get('data.authenticated.accessPayload.cognito:groups'))) {
+      return this.get('data.authenticated.accessPayload.cognito:groups');
+    }
+    return [];
+  }),
 
   'emailVerified?': readOnly('data.authenticated.attributes.email_verified'),
 

@@ -32,18 +32,16 @@ export default Mixin.create({
   /**
    * @param authenticationState
    * @param newPassword
+   * @param additionalAttributes
    * @return {Promise<T | never>}
    * @see https://aws-amplify.github.io/amplify-js/api/classes/authclass.html#completenewpassword
    */
-  completePassword(authenticationState, newPassword) {
+  completePassword(authenticationState, newPassword, additionalAttributes = {}) {
     return this.get('awsAmplify.auth')
-      .completeNewPassword(authenticationState.get('_cognitoUser'), newPassword)
+      .completeNewPassword(authenticationState.get('_cognitoUser'), newPassword, additionalAttributes)
       .then((cognitoUser) => {
         authenticationState.set('_cognitoUser', cognitoUser);
-        if (authenticationState.get('singleStepAuthentication?')) {
-          // authenticationState.destroy(); // don't think we can destroy this here because the caller needs it
-          this.authenticate('authenticator:aws-amplify-authenticator');
-        }
+        this.authenticate('authenticator:aws-amplify-authenticator');
         return authenticationState;
       })
       .catch(response => this._throwErrorResponse(response));
@@ -147,7 +145,6 @@ export default Mixin.create({
           _cognitoUser: cognitoUser
         });
         if (authenticationState.get('singleStepAuthentication?')) {
-          authenticationState.destroy();
           this.authenticate('authenticator:aws-amplify-authenticator');
         }
         return authenticationState;
