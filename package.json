@@ -1,6 +1,6 @@
 {
   "name": "ember-simple-auth-aws-amplify",
-  "version": "0.1.0-alpha.8",
+  "version": "0.2.0-alpha.0",
   "description": "Ember Simple Auth implementation using AWS Amplify.",
   "keywords": [
     "ember-simple-auth",
