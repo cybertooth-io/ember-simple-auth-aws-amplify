@@ -25,7 +25,7 @@ export default Mixin.create({
     return this.get('awsAmplify.auth')
       .currentAuthenticatedUser({ bypassCache: false })
       .then(cognitoUser => this.get('awsAmplify.auth').changePassword(cognitoUser, oldPassword, newPassword))
-      .then(() => this.forceRestore())
+      .then(() => this.authenticate('authenticator:aws-amplify-authenticator'))
       .catch(response => this._throwErrorResponse(response));
   },
 
@@ -74,7 +74,7 @@ export default Mixin.create({
     return this.get('awsAmplify.auth')
       .currentAuthenticatedUser({ bypassCache: false })
       .then(cognitoUser => this.get('awsAmplify.auth').setPreferredMFA(cognitoUser, 'NOMFA'))
-      .then(() => this.forceRestore())
+      .then(() => this.authenticate('authenticator:aws-amplify-authenticator'))
       .catch(response => this._throwErrorResponse(response));
   },
 
@@ -175,32 +175,26 @@ export default Mixin.create({
     return this.get('awsAmplify.auth')
       .currentAuthenticatedUser({ bypassCache: false })
       .then(cognitoUser => this.get('awsAmplify.auth').updateUserAttributes(cognitoUser, attributesHash))
-      .then(() => this.forceRestore())
+      .then(() => this.authenticate('authenticator:aws-amplify-authenticator'))
       .catch(response => this._throwErrorResponse(response));
   },
 
   verifyTotpPasscode(mfaActivationState) {
+    // TODO: convert this to ember-concurrency task that returns the mfaActivationState on fail and refreshes session on success
     return this.get('awsAmplify.auth')
-      .verifyTotpToken(mfaActivationState.get('_cognitoUser'), mfaActivationState.get('passcodeOne'))
+      .verifyTotpToken(mfaActivationState.get('_cognitoUser'), mfaActivationState.get('passcode'))
       .then(() => {
-        mfaActivationState.set('passcodeOneVerified?', true);
-      })
-      .catch(response => this._throwErrorResponse(response));
-  },
-
-  finalizeTotp(mfaActivationState) {
-    return this.get('awsAmplify.auth')
-      .verifyTotpToken(mfaActivationState.get('_cognitoUser'), mfaActivationState.get('passcodeTwo'))
-      .then(() => {
-        mfaActivationState.set('passcodeTwoVerified?', true);
         return this.get('awsAmplify.auth')
           .setPreferredMFA(mfaActivationState.get('_cognitoUser'), 'TOTP');
       })
       .then(() => {
         mfaActivationState.destroy();
-        this.forceRestore();
+        this.authenticate('authenticator:aws-amplify-authenticator');
       })
-      .catch(response => this._throwErrorResponse(response));
+      .catch(response => {
+        mfaActivationState.set('passcode', '');
+        this._throwErrorResponse(response);
+      });
   },
 
   _throwErrorResponse(error) {

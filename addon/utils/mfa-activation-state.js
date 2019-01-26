@@ -1,4 +1,4 @@
-import { and, not, notEmpty } from '@ember/object/computed';
+import { and, equal, notEmpty } from '@ember/object/computed';
 import EmberObject, { computed } from '@ember/object';
 
 /**
@@ -20,6 +20,8 @@ export default EmberObject.extend({
 
   issuer: 'Ember-Simple-Auth-Issuer-Example',
 
+  'mfaInactive?': equal('_cognitoUser.preferredMFA', 'NOMFA'),
+
   /**
    * @see https://github.com/google/google-authenticator/wiki/Key-Uri-Format
    */
@@ -31,29 +33,11 @@ export default EmberObject.extend({
     return `otpauth://totp/${label}?secret=${secret}&issuer=${issuer}`;
   }),
 
-  passcodeOne: '',
-
-  'passcodeOneRequired?': not('passcodeOneVerified?'),
-
-  'passcodeOneVerified?': false,
-
-  passcodeTwo: '',
-
-  'passcodeTwoRequired?': not('passcodeTwoVerified?'),
-
-  'passcodeTwoVerified?': false,
+  passcode: '',
 
   secret: '',
 
-  'secretPresent?': notEmpty('secret'),
+  'verifyRequired?': and('mfaInactive?', 'secretPresent?'),
 
-  /**
-   * Step 1 presents the QRC and asks the user for the first code.
-   */
-  'step1?': and('secretPresent?', 'passcodeOneRequired?', 'passcodeTwoRequired?'),
-
-  /**
-   * Step 2 asks the user for the second code.
-   */
-  'step2?': and('secretPresent?', 'passcodeOneVerified?', 'passcodeTwoRequired?')
+  'secretPresent?': notEmpty('secret')
 });
