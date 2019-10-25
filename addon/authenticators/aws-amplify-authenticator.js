@@ -1,5 +1,5 @@
 import { inject as service } from '@ember/service';
-import { merge } from '@ember/polyfills';
+import { assign } from '@ember/polyfills';
 import { task, timeout } from 'ember-concurrency';
 import { getOwner } from '@ember/application';
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
@@ -124,11 +124,11 @@ export default BaseAuthenticator.extend({
       .then(cognitoUser => {
         this.get('_refreshAccessTokenTask').cancelAll();
         this.get('_refreshAccessTokenTask').perform(cognitoUser.signInUserSession.accessToken.payload.exp);
-        const data = merge({ accessPayload: cognitoUser.signInUserSession.accessToken.payload }, { accessToken: cognitoUser.signInUserSession.accessToken.jwtToken });
-        merge(data, { attributes: cognitoUser.attributes });
-        merge(data, { idPayload: cognitoUser.signInUserSession.idToken.payload });
-        merge(data, { idToken: cognitoUser.signInUserSession.idToken.jwtToken });
-        merge(data, { preferredMFA: cognitoUser.preferredMFA });
+        const data = assign({ accessPayload: cognitoUser.signInUserSession.accessToken.payload }, { accessToken: cognitoUser.signInUserSession.accessToken.jwtToken });
+        assign(data, { attributes: cognitoUser.attributes });
+        assign(data, { idPayload: cognitoUser.signInUserSession.idToken.payload });
+        assign(data, { idToken: cognitoUser.signInUserSession.idToken.jwtToken });
+        assign(data, { preferredMFA: cognitoUser.preferredMFA });
         return data;
       });
   }
