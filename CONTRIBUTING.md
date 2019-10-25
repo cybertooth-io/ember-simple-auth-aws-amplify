@@ -1,13 +1,10 @@
-Contributing
-==============================================================================
+# How To Contribute
 
-Setup
-------------------------------------------------------------------------------
+## Setup
 
 * `git clone git@github.com:cybertooth-io/ember-simple-auth-aws-amplify.git`
 * `cd ember-simple-auth-aws-amplify`
 * `yarn`
-
 
 ### Building The Add-on
 
@@ -33,8 +30,7 @@ Setup
 
 For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
 
-Upgrading The Add-On
-------------------------------------------------------------------------------
+## Upgrading The Add-On
 
 When upgrading this add-on, after successfully performing `ember init` use the following
 commands to install the following dependencies required by this add-on.
@@ -45,8 +41,7 @@ ember install ember-concurrency
 yarn add @aws-amplify/auth @aws-amplify/core ember-simple-auth
 ```
 
-Linking This Add-on For Local Testing
-------------------------------------------------------------------------------
+## Linking This Add-on For Local Testing
 
 ### Linking
 
@@ -73,8 +68,7 @@ $ yarn unlink
 $ yarn unlink ember-simple-auth-aws-amplify
 ```
 
-Deploying The Dummy Application
-------------------------------------------------------------------------------
+## Deploying The Dummy Application
 
 Make sure your `~/.aws/credentials` file has a profile named _cybertooth_ 
 with a valid key and secret,
@@ -92,8 +86,7 @@ Confirm your changes are showing up in our S3 container: http://ember-simple-aut
 You may need to go into AWS CloudFront to expire the index.html file before the site 
 changes are picked up (see [issue](https://github.com/cybertoothca/ember-cli-text-support-mixins/issues/29)).
 
-Releasing & Publishing To NPM
-------------------------------------------------------------------------------
+## Releasing & Publishing To NPM
 
 ```bash
 # `yarn publish` will prompt you for the next/new version name
