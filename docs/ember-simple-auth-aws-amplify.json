@@ -1,0 +1,1 @@
+{"jsonapi":{"version":"1.0"},"data":{"type":"project","id":"ember-simple-auth-aws-amplify","attributes":{"name":"ember-simple-auth-aws-amplify","version":"0.2.0-alpha.0","navigationIndex":[]},"relationships":{"modules":{"data":[]}}}}

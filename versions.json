@@ -1,0 +1,14 @@
+{
+  "ember-addon-docs-site": {
+    "path": "versions/ember-addon-docs-site",
+    "name": "ember-addon-docs-site",
+    "sha": "451a9c9ce57945afa2ae8def5711a07e849deb1f",
+    "tag": null
+  },
+  "-latest": {
+    "path": "",
+    "name": "Latest",
+    "sha": "451a9c9ce57945afa2ae8def5711a07e849deb1f",
+    "tag": null
+  }
+}
