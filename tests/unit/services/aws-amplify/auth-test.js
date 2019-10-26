@@ -1,7 +1,7 @@
-import { module } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { module } from 'qunit';
 
-module('Unit | Service | aws-amplify/auth', function (hooks) {
+module('Unit | Service | aws-amplify/auth', function(hooks) {
   setupTest(hooks);
 
   // TODO: need to Mock the Auth class

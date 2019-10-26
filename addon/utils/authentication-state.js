@@ -1,12 +1,11 @@
-import { equal, or, readOnly } from '@ember/object/computed';
 import EmberObject from '@ember/object';
+import { equal, or, readOnly } from '@ember/object/computed';
 
 /**
  * An instance of `AuthenticationState` is returned from the `session` service's `signIn(...)` function.
  * It allows implementors to determine whether or not they need to prompt for a MFA passcode.
  */
 export default EmberObject.extend({
-
   challengeName: readOnly('_cognitoUser.challengeName'),
 
   init(/*_cognitoUser*/) {

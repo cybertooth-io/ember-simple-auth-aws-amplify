@@ -1,6 +1,6 @@
+import Auth from '@aws-amplify/auth';
 import { Hub } from '@aws-amplify/core';
 import Service, { inject as service } from '@ember/service';
-import Auth from '@aws-amplify/auth';
 import AwsAmplifyHub from '../../mixins/aws-amplify/hub';
 
 /**
@@ -10,7 +10,6 @@ import AwsAmplifyHub from '../../mixins/aws-amplify/hub';
  * @see https://aws-amplify.github.io/docs/js/authentication#manual-setup
  */
 export default Service.extend(AwsAmplifyHub, {
-
   /**
    * A service that reads the Ember `config/environment.js` configuration for the `ember-simple-auth-aws-amplify`
    * add-on.
@@ -31,5 +30,5 @@ export default Service.extend(AwsAmplifyHub, {
       .then(() => console.warn('Session initialization recovered a session from local storage.'))
       .catch(response => console.warn('Session initialization FAILED to recover an active session.', response));
     this.set('auth', Auth);
-  },
+  }
 });
