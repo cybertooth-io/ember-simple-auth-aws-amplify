@@ -82,6 +82,11 @@ Try to use an emoji to help describe the commit:
 * 🗑 Removal
 * 🚧 Work In Progress 
 
+### Prettier
+
+`./node_modules/.bin/prettier --write "addon/**/*.{js,ts,json,css,scss,md}"`
+`./node_modules/.bin/prettier --write "app/**/*.{js,ts,json,css,scss,md}"`
+`./node_modules/.bin/prettier --write "tests/**/*.{js,ts,json,css,scss,md}"`
 
 ## Releasing & Publishing To NPM
 

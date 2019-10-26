@@ -1,7 +1,7 @@
-import { inject as service } from '@ember/service';
-import { assign } from '@ember/polyfills';
-import { task, timeout } from 'ember-concurrency';
 import { getOwner } from '@ember/application';
+import { assign } from '@ember/polyfills';
+import { inject as service } from '@ember/service';
+import { task, timeout } from 'ember-concurrency';
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
 /**
@@ -11,7 +11,6 @@ import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
  * the `session`'s `signIn(...)` and `confirmSignIn(...)` functions.
  */
 export default BaseAuthenticator.extend({
-
   /**
    * Implementation of the `authenticate` method is dead simple; ask AWS Amplify's `Auth` to
    * reach out to AWS Cognito User Pool and grab the `currentAuthenticatedUser(...)` which returns a
@@ -87,14 +86,16 @@ export default BaseAuthenticator.extend({
    *
    * @private
    */
-  _refreshAccessTokenTask: task(function* (exp) {
+  _refreshAccessTokenTask: task(function*(exp) {
     const wait = exp * 1000 - Date.now();
     console.warn('Scheduled token refresh will occur at ', new Date(exp * 1000));
 
     yield timeout(wait);
 
     console.warn('Commencing refresh of the access token at ', new Date());
-    return getOwner(this).lookup('session:main').restore();   // TODO: try this.restore()?  trigger restore events?
+    return getOwner(this)
+      .lookup('session:main')
+      .restore(); // TODO: try this.restore()?  trigger restore events?
   }),
 
   /**
@@ -124,7 +125,10 @@ export default BaseAuthenticator.extend({
       .then(cognitoUser => {
         this.get('_refreshAccessTokenTask').cancelAll();
         this.get('_refreshAccessTokenTask').perform(cognitoUser.signInUserSession.accessToken.payload.exp);
-        const data = assign({ accessPayload: cognitoUser.signInUserSession.accessToken.payload }, { accessToken: cognitoUser.signInUserSession.accessToken.jwtToken });
+        const data = assign(
+          { accessPayload: cognitoUser.signInUserSession.accessToken.payload },
+          { accessToken: cognitoUser.signInUserSession.accessToken.jwtToken }
+        );
         assign(data, { attributes: cognitoUser.attributes });
         assign(data, { idPayload: cognitoUser.signInUserSession.idToken.payload });
         assign(data, { idToken: cognitoUser.signInUserSession.idToken.jwtToken });

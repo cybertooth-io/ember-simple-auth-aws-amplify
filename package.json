@@ -40,7 +40,8 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each"
+    "test:all": "ember try:each",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@aws-amplify/auth": "^1.2.14",
@@ -82,14 +83,24 @@
     "ember-try": "^1.2.1",
     "eslint-plugin-ember": "^7.1.0",
     "eslint-plugin-node": "^10.0.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
     "loader.js": "^4.7.0",
+    "prettier": "^1.18.2",
     "qunit-dom": "^0.9.0"
   },
   "engines": {
     "node": "8.* || >= 10.*"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "demoURL": "https://cybertooth-io.github.io/ember-simple-auth-aws-amplify/"
   },
-  "homepage": "https://cybertooth-io.github.io/ember-simple-auth-aws-amplify"
+  "homepage": "https://cybertooth-io.github.io/ember-simple-auth-aws-amplify/",
+  "lint-staged": {
+    "*.{js,json,css}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
 }

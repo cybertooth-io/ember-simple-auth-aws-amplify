@@ -1,5 +1,5 @@
-import { and, equal, notEmpty } from '@ember/object/computed';
 import EmberObject, { computed } from '@ember/object';
+import { and, equal, notEmpty } from '@ember/object/computed';
 
 /**
  * An instance of `MfaActivationState` is returned from the `session` service's `setupTOTP(...)` function.
@@ -7,7 +7,6 @@ import EmberObject, { computed } from '@ember/object';
  * an Authenticator app.
  */
 export default EmberObject.extend({
-
   /**
    * Set during initialization; e.g. `MfaActivationState.create({_cognitoUser: cognitoUser})`.
    * @private
@@ -25,7 +24,7 @@ export default EmberObject.extend({
   /**
    * @see https://github.com/google/google-authenticator/wiki/Key-Uri-Format
    */
-  qrcUrl: computed('_cognitoUser.signInUserSession.idToken.payload.email', 'secret', function () {
+  qrcUrl: computed('_cognitoUser.signInUserSession.idToken.payload.email', 'secret', function() {
     const issuer = encodeURIComponent(this.get('issuer'));
     const email = encodeURIComponent(this.get('_cognitoUser.signInUserSession.idToken.payload.email'));
     const secret = this.get('secret');

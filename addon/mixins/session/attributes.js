@@ -1,7 +1,7 @@
-import { isNone, isPresent } from '@ember/utils';
-import { equal, not, readOnly } from '@ember/object/computed';
 import { computed, getWithDefault } from '@ember/object';
+import { equal, not, readOnly } from '@ember/object/computed';
 import Mixin from '@ember/object/mixin';
+import { isNone, isPresent } from '@ember/utils';
 
 /**
  * This mixin provides some tangible helpers that can tranform information from your
@@ -16,7 +16,7 @@ import Mixin from '@ember/object/mixin';
 export default Mixin.create({
   address: readOnly('data.authenticated.attributes.address'),
 
-  authenticatedAt: computed('data.authenticated.accessPayload.auth_time', function () {
+  authenticatedAt: computed('data.authenticated.accessPayload.auth_time', function() {
     return new Date(parseInt(this.get('data.authenticated.accessPayload.auth_time')) * 1000);
   }),
 
@@ -28,7 +28,7 @@ export default Mixin.create({
    * into account to correctly process the dates.
    * @see https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
    */
-  birthDate: computed('data.authenticated.attributes.birthdate', function () {
+  birthDate: computed('data.authenticated.attributes.birthdate', function() {
     if (isPresent(this.get('data.authenticated.attributes.birthdate'))) {
       const splits = this.get('data.authenticated.attributes.birthdate').split('-');
       if (splits[0] === '0000') {
@@ -44,7 +44,7 @@ export default Mixin.create({
 
   familyName: readOnly('data.authenticated.attributes.family_name'),
 
-  fullName: computed('familyName', 'givenName', 'name', function () {
+  fullName: computed('familyName', 'givenName', 'name', function() {
     if (isNone(this.get('name'))) {
       return `${this.get('givenName')} ${this.get('familyName')}`;
     } else {
@@ -64,7 +64,7 @@ export default Mixin.create({
   /**
    * Null-safe fetch of the groups assigned to the Cognito User.
    */
-  groups: computed('data.authenticated.accessPayload.cognito:groups', function () {
+  groups: computed('data.authenticated.accessPayload.cognito:groups', function() {
     if (isPresent(this.get('data.authenticated.accessPayload.cognito:groups'))) {
       return this.get('data.authenticated.accessPayload.cognito:groups');
     }
@@ -73,11 +73,11 @@ export default Mixin.create({
 
   'emailVerified?': readOnly('data.authenticated.attributes.email_verified'),
 
-  expiresAt: computed('data.authenticated.accessPayload.exp', function () {
+  expiresAt: computed('data.authenticated.accessPayload.exp', function() {
     return new Date(parseInt(this.get('data.authenticated.accessPayload.exp')) * 1000);
   }),
 
-  issuedAt: computed('data.authenticated.accessPayload.iat', function () {
+  issuedAt: computed('data.authenticated.accessPayload.iat', function() {
     return new Date(parseInt(this.get('data.authenticated.accessPayload.iat')) * 1000);
   }),
 
@@ -133,7 +133,7 @@ export default Mixin.create({
    * number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.
    * @see https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
    */
-  updatedAt: computed('data.authenticated.attributes.updated_at', function () {
+  updatedAt: computed('data.authenticated.attributes.updated_at', function() {
     return new Date(parseInt(this.get('data.authenticated.attributes.updated_at')) * 1000);
   }),
 
@@ -141,7 +141,7 @@ export default Mixin.create({
 
   website: readOnly('data.authenticated.attributes.website'),
 
-  writableAttributes: computed(function () {
+  writableAttributes: computed(function() {
     return {
       address: getWithDefault(this, 'address', ''),
       birthdate: getWithDefault(this, 'data.authenticated.attributes.birthdate', ''),
@@ -158,7 +158,7 @@ export default Mixin.create({
       profile: getWithDefault(this, 'profile', ''),
       website: getWithDefault(this, 'website', ''),
       zoneinfo: getWithDefault(this, 'zoneInfo', '')
-    }
+    };
   }),
 
   /**

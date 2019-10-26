@@ -85,7 +85,9 @@ export default Mixin.create({
         this.afterSignUp();
         break;
       default:
-        console.warn(`AWS Amplify Hub - AUTH Event -> '${capsule.payload.event}' was ignored in authenticator/aws-amplify-auth.js`);
+        console.warn(
+          `AWS Amplify Hub - AUTH Event -> '${capsule.payload.event}' was ignored in authenticator/aws-amplify-auth.js`
+        );
     }
   }
 });

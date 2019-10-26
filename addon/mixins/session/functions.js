@@ -1,6 +1,6 @@
+import Mixin from '@ember/object/mixin';
 import { inject as service } from '@ember/service';
 import { typeOf } from '@ember/utils';
-import Mixin from '@ember/object/mixin';
 import AuthenticationState from '../../utils/authentication-state';
 import MfaActivationState from '../../utils/mfa-activation-state';
 
@@ -39,7 +39,7 @@ export default Mixin.create({
   completePassword(authenticationState, newPassword, additionalAttributes = {}) {
     return this.get('awsAmplify.auth')
       .completeNewPassword(authenticationState.get('_cognitoUser'), newPassword, additionalAttributes)
-      .then((cognitoUser) => {
+      .then(cognitoUser => {
         authenticationState.set('_cognitoUser', cognitoUser);
         this.authenticate('authenticator:aws-amplify-authenticator');
         return authenticationState;
@@ -122,9 +122,9 @@ export default Mixin.create({
           _cognitoUser: cognitoUser,
           issuer: this.get('configuration.totpIssuerName')
         });
-        return this.get('awsAmplify.auth').setupTOTP(cognitoUser)
+        return this.get('awsAmplify.auth').setupTOTP(cognitoUser);
       })
-      .then((secret) => {
+      .then(secret => {
         mfaActivationState.set('secret', secret);
         return mfaActivationState;
       })
@@ -184,8 +184,7 @@ export default Mixin.create({
     return this.get('awsAmplify.auth')
       .verifyTotpToken(mfaActivationState.get('_cognitoUser'), mfaActivationState.get('passcode'))
       .then(() => {
-        return this.get('awsAmplify.auth')
-          .setPreferredMFA(mfaActivationState.get('_cognitoUser'), 'TOTP');
+        return this.get('awsAmplify.auth').setPreferredMFA(mfaActivationState.get('_cognitoUser'), 'TOTP');
       })
       .then(() => {
         mfaActivationState.destroy();
@@ -203,9 +202,8 @@ export default Mixin.create({
         code: 'UnprocessableEntity',
         message: error,
         name: 'UnprocessableEntity'
-      }
+      };
     }
     throw error;
   }
-})
-;
+});
