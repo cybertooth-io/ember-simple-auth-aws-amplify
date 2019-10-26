@@ -1,13 +1,11 @@
-ember-simple-auth-aws-amplify
-==============================================================================
+# ember-simple-auth-aws-amplify
 
 Using [AWS Amplify Auth](https://aws-amplify.github.io/docs/js/authentication) & Core 
 library to authenticate with your AWS Cognito User Pool.
 
 **ALPHA ADD-ON: I have just started playing with Cognito and AWS Amplify.**
 
-Features
-------------------------------------------------------------------------------
+## Features
 
 1. Attempt to adhere to the Ember Simple Auth principles while exposing a subset 
 of [AWS Amplify's `Auth`](https://aws-amplify.github.io/amplify-js/api/classes/authclass.html)'s features 
@@ -29,20 +27,23 @@ in the `session.data.authenticated` property storage
 
 ![Dependencies](http://david-dm.org/cybertooth-io/ember-simple-auth-aws-amplify.svg) [![ember-observer-badge](http://emberobserver.com/badges/ember-simple-auth-aws-amplify.svg)](http://emberobserver.com/addons/ember-simple-auth-aws-amplify) [![License](http://img.shields.io/npm/l/ember-simple-auth-aws-amplify.svg)](LICENSE.md)
 
-Motivation
-------------------------------------------------------------------------------
+## Motivation
 
 1. Hide details of the AWS Amplify `Auth` & `CognitoUser`
 1. Fold into familiar `ember-simple-auth` ecosystem
 1. Automatically refresh access tokens on a schedule using `ember-concurrency`
 
-Built With
-------------------------------------------------------------------------------
+## Built With
 
 [![ember-cli-3.4.3](https://img.shields.io/badge/ember--cli-3.4.3-brightgreen.svg)](https://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify)
 
-Tested Against
-------------------------------------------------------------------------------
+## Compatibility
+
+* Ember.js v3.4 or above
+* Ember CLI v2.13 or above
+* Node.js v8 or above
+
+## Tested Against
 
 [![ember-lts-2.4](https://img.shields.io/badge/ember--try-ember--lts--2.4-brightgreen.svg)](https://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify)
 [![ember-lts-2.8](https://img.shields.io/badge/ember--try-ember--lts--2.8-brightgreen.svg)](https://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify)
@@ -55,8 +56,7 @@ Tested Against
 [![ember-canary](https://img.shields.io/badge/ember--try-ember--canary-brightgreen.svg)](https://circleci.com/gh/cybertooth-io/ember-simple-auth-aws-amplify)
 
 
-Installation
-------------------------------------------------------------------------------
+## Installation
 
 ```
 ember install ember-simple-auth-aws-amplify
@@ -79,8 +79,7 @@ add-on blueprint: `ember g ember-simple-auth-aws-amplify`.
 * `ember-concurrency` - Timed task for refreshing token
 * `ember-simple-auth` - The EmberJs foundation auth add-on 
 
-Quick Start
-------------------------------------------------------------------------------
+## Quick Start
 
 ### EmberJs Configuration
 
@@ -148,8 +147,7 @@ module.exports = function (environment) {
 
 ![][img-app-settings]
 
-Examples & Workflow
-------------------------------------------------------------------------------
+## Examples & Workflow
 
 ### Sign Up
 
@@ -157,18 +155,15 @@ Examples & Workflow
 
 ### Sign Out
 
-Usage
-------------------------------------------------------------------------------
+## Usage
 
 [I'll add some more here before official release]
 
-Contributing & Yadda-Yadda-Yadda
-------------------------------------------------------------------------------
+## Contributing & Yadda-Yadda-Yadda
 
-Check out [CONTRIBUTING.md](CONTRIBUTING.md).
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
-License
-------------------------------------------------------------------------------
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
 
