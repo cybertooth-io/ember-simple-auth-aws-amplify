@@ -1,45 +1,33 @@
 # How To Contribute
 
-## Setup
+## Clone & Setup
 
 * `git clone git@github.com:cybertooth-io/ember-simple-auth-aws-amplify.git`
 * `cd ember-simple-auth-aws-amplify`
-* `yarn`
+* `yarn install`
 
-### Building The Add-on
+## Linting
 
-* `ember b`
-* `ember build`
+* `yarn lint:hbs`
+* `yarn lint:js`
+* `yarn lint:js --fix`
 
-### Linting
-
-* `npm run lint:hbs`
-* `npm run lint:js`
-* `npm run lint:js -- --fix`
-
-### Running tests
+## Running tests
 
 * `ember test` – Runs the test suite on the current Ember version
 * `ember test --server` – Runs the test suite in "watch mode"
 * `ember try:each` – Runs the test suite against multiple Ember versions
 
-### Running The Dummy Application
+## Running the dummy application
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+* `ember serve`
+* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
-For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
+For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
-## Upgrading The Add-On
+## Deployment Guide
 
-When upgrading this add-on, after successfully performing `ember init` use the following
-commands to install the following dependencies required by this add-on.
-
-```bash
-ember install ember-auto-import
-ember install ember-concurrency
-yarn add @aws-amplify/auth @aws-amplify/core ember-simple-auth
-```
+Visit the [Deployment](DEPLOYMENT.md) guide.
 
 ## Linking This Add-on For Local Testing
 
@@ -56,6 +44,8 @@ $ yarn link ember-simple-auth-aws-amplify
 
 Note: I've actually had to go into my _other project_ and put this into its `package.json`:
 `"ember-simple-auth-aws-amplify": "link:../ember-simple-auth-aws-amplify",`
+or
+`"ember-simple-auth-aws-amplify": "*",`
 
 ### Unlinking
 
@@ -68,23 +58,30 @@ $ yarn unlink
 $ yarn unlink ember-simple-auth-aws-amplify
 ```
 
-## Deploying The Dummy Application
+## Commiting Code
 
-Make sure your `~/.aws/credentials` file has a profile named _cybertooth_ 
-with a valid key and secret,
+Fork and submit a pull request.
 
-```
-[cybertooth]
-aws_access_key_id = <KEY>
-aws_secret_access_key = <SECRET>
-```
+Try to use an emoji to help describe the commit:
 
-Deploy by invoking the following command: `ember deploy production`
+* 🎉 Initial Commit
+* 🔖 Version Tag
+* ✨ New Feature
+* 🐛 Bugfix
+* 🔒 Security Fix
+* 📇 Metadata
+* ♻️ Refactoring
+* 📚 Documentation
+* 🌐 Internationalization
+* ♿️ Accessibility
+* 🐎 Performance
+* 🎨 Cosmetic
+* 🔧 Tooling
+* 🚨 Tests
+* 💩 Deprecation
+* 🗑 Removal
+* 🚧 Work In Progress 
 
-Confirm your changes are showing up in our S3 container: http://ember-simple-auth-aws-amplify.cybertooth.io/
-
-You may need to go into AWS CloudFront to expire the index.html file before the site 
-changes are picked up (see [issue](https://github.com/cybertoothca/ember-cli-text-support-mixins/issues/29)).
 
 ## Releasing & Publishing To NPM
 
