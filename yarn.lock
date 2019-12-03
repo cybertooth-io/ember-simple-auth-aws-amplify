@@ -2,27 +2,35 @@
 # yarn lockfile v1
 
 
-"@aws-amplify/auth@^1.2.14":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-1.5.0.tgz#b8b0f804410bd3d708aa37a7775fbc086214b7c0"
-  integrity sha512-dTk+5a0sTtWHGMbx575QHOFV6fBnDH/PPZinIObdWXA36rPDhxITYzy6ZvfCrOPUMcXEcEFDuqWP3u3kq5tjZA==
+"@aws-amplify/auth@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-2.1.1.tgz#10094d07032a49301397f4423c6aa6d72a61eb9a"
+  integrity sha512-tjlKeVbGA/WiMJrY9uSxd5nS0H0Aykf4weQaWdm72c1+4/DEfVP8U9w/km3mIUI4cNk1/A8D0E1dBvJDHppGNg==
   dependencies:
-    "@aws-amplify/cache" "^1.1.4"
-    "@aws-amplify/core" "^1.2.4"
+    "@aws-amplify/cache" "^2.1.1"
+    "@aws-amplify/core" "^2.2.0"
     amazon-cognito-identity-js "^3.2.0"
     crypto-js "^3.1.9-1"
 
-"@aws-amplify/cache@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/cache/-/cache-1.1.4.tgz#3d7a58bcca5eb96a03a7ff3727b0f74a7aeca3bf"
-  integrity sha512-3wlRgY2JEkonwjk0Z8kNmZ0DkfbNxaLkKIMN1s6IXVuTUOrhA89ZeuHcqHRbm7oB1Z0h24wY+B6Ip962y7u77A==
+"@aws-amplify/cache@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/cache/-/cache-2.1.1.tgz#b917870597ce565a0d1e56d6ca4ec66e86e7f346"
+  integrity sha512-Vlg4IArsGlmsEu9WxrmuS3Qsr2Ne8OvoiTm1BhVog9RbtXpllFVvujBjJYHsTPKi+CGzfM9c/Jlq61dfbKicqg==
   dependencies:
-    "@aws-amplify/core" "^1.2.4"
+    "@aws-amplify/core" "^2.2.0"
 
-"@aws-amplify/core@^1.0.21", "@aws-amplify/core@^1.2.4":
+"@aws-amplify/core@^1.0.21":
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-1.2.4.tgz#4f00879ffefbb6e2e59029d96a491da44c1cae49"
   integrity sha512-IMtcA/VREJRnS1GDyuX2yvmdi5wcukBWkwIc3Sm9yHegMz5cwi5wb5vl2xxzQabIbSCeNofcoY0qZ3ocn4JNsg==
+  dependencies:
+    aws-sdk "2.518.0"
+    url "^0.11.0"
+
+"@aws-amplify/core@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-2.2.0.tgz#961df43e8d1e237abe722f9f7876c1fa497c4428"
+  integrity sha512-roKXGCUy3tVtVcxemsvBEtVvQmob4gPlUa1pWba6/MRXzUHT29YW1IY/mVMlmBIMXz5gdeq6n7kvCoMZg3oGXA==
   dependencies:
     aws-sdk "2.518.0"
     url "^0.11.0"
