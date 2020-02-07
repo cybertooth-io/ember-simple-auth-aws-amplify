@@ -20,9 +20,9 @@
     "@aws-amplify/core" "^2.2.1"
 
 "@aws-amplify/core@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-2.2.1.tgz#01de3c82f98993514c32533c4203339727c140f0"
-  integrity sha512-gjqwpdN9bccC05LCPoKEWWNVMcWc8SPuG/PhBW9CxicX72FljLMP4ae9A21zymz63auUtp4qUbHcc4D9JW/EpA==
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-2.2.3.tgz#3e6bdbad99208040cc72499f97d35f1977a7766b"
+  integrity sha512-jAOyDcprd1mSkBnIBFn11W9wq0iQrRe+CtASoUDyLjSS823q1t+rQAX84tdOsS8+QYHfJWXeL4kuvqUBHZ4FsQ==
   dependencies:
     aws-sdk "2.518.0"
     url "^0.11.0"
