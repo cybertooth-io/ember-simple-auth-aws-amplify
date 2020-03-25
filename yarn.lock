@@ -3,26 +3,26 @@
 
 
 "@aws-amplify/auth@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-2.1.2.tgz#e8528d507889d310f11dab6208ce28095fe7ca6a"
-  integrity sha512-ZDpqSzHAJUqp2uMpy4oorv//mOT6hBEoOqbTU0Hi5qGAbj7DJNakBFOAGfLD6vS8G9mq/aX6YSm3EOV8x2RahQ==
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-2.1.7.tgz#e03ba2f50d5e4ced5da312c9f7cc55dbefa3840a"
+  integrity sha512-tvc/mOJDhGtrfVuBI/PDDzs/+oKCKkV1E7RxWHLNe5/n1CH5uj+ZecWObh0RtW+PyTZgilQDI0YNsO8a22TGoQ==
   dependencies:
-    "@aws-amplify/cache" "^2.1.2"
-    "@aws-amplify/core" "^2.2.1"
-    amazon-cognito-identity-js "^3.2.1"
-    crypto-js "^3.1.9-1"
+    "@aws-amplify/cache" "^2.1.7"
+    "@aws-amplify/core" "^2.2.6"
+    amazon-cognito-identity-js "^3.2.6"
+    crypto-js "^3.3.0"
 
-"@aws-amplify/cache@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/cache/-/cache-2.1.2.tgz#b8841dfd2e117d06c94793a21927857d0f564e72"
-  integrity sha512-Lw5ni1lcui7cpcHVmR3tNtzX4unT2552on90N78wO7ksXEk3wr7kOT4SgtnjQtxmjiFimd3CjgFxl3T1B+SVhw==
+"@aws-amplify/cache@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/cache/-/cache-2.1.7.tgz#421eaa819a25d491a73058faa550d665d10ba6d4"
+  integrity sha512-YQsZHoA6gB3MMAvWyjnB2pzwjTrVQOL4Ly19Dq2BEHEfULB7UCzSSHTpqdJZPpUpheqsOXasLwwOcpHzPEcqCg==
   dependencies:
-    "@aws-amplify/core" "^2.2.1"
+    "@aws-amplify/core" "^2.2.6"
 
-"@aws-amplify/core@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-2.2.1.tgz#01de3c82f98993514c32533c4203339727c140f0"
-  integrity sha512-gjqwpdN9bccC05LCPoKEWWNVMcWc8SPuG/PhBW9CxicX72FljLMP4ae9A21zymz63auUtp4qUbHcc4D9JW/EpA==
+"@aws-amplify/core@^2.2.1", "@aws-amplify/core@^2.2.6":
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-2.2.6.tgz#b9fbeb71ded2aa082429dd0289140c5af894a5e1"
+  integrity sha512-Zo8j1zaMcFgDQRxOi0R6OIvP4eaQrsa6WX/KLNSvb20V3UbQ5l4xpSIkpXiYrccugdmyJ3SdYDzoYgPpaoR2pQ==
   dependencies:
     aws-sdk "2.518.0"
     url "^0.11.0"
@@ -1346,13 +1346,13 @@ ajv@^6.10.2, ajv@^6.5.5, ajv@^6.9.1:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-amazon-cognito-identity-js@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-3.2.1.tgz#a86df85ce8784eb6aeb39b4dff4108133de1c5cf"
-  integrity sha512-pQrML+uC2STrscYgKzCyRLXND9W4LhYM5s34g35c+D8Jy7pcTH+bUp2VeNNrg1lkhX1XBwecXwu2KcMkpsD+sQ==
+amazon-cognito-identity-js@^3.2.6:
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-3.2.6.tgz#8b57095535f8ec1332172061cb4aefa9b79fd8a5"
+  integrity sha512-RQMGvSdVlYmkPavYEK7goRy0s9gTQWU2vFP92s/hqLL/Vk5S9YQu5CEVLj3P9YPalXSzwthwWe0ClPHAc1EXvw==
   dependencies:
     buffer "4.9.1"
-    crypto-js "^3.1.9-1"
+    crypto-js "^3.3.0"
     js-cookie "^2.1.4"
 
 amd-name-resolver@1.2.0:
@@ -3940,10 +3940,10 @@ crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
-crypto-js@^3.1.9-1:
-  version "3.1.9-1"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
-  integrity sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg=
+crypto-js@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.3.0.tgz#846dd1cce2f68aacfa156c8578f926a609b7976b"
+  integrity sha512-DIT51nX0dCfKltpRiXV+/TVZq+Qq2NgF4644+K7Ttnla7zEzqc+kjJyiB96BHNyUTBxyjzRcZYpUdZa+QAqi6Q==
 
 crypto-random-string@^2.0.0:
   version "2.0.0"
